@@ -1,0 +1,3 @@
+class Tanggapan < ApplicationRecord
+    
+end

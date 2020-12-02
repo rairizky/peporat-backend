@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tgl_pengaduan: 2020-12-02
+  user_id: 1
+  image: MyString
+  laporan: MyText
+  status: MyString
+
+two:
+  tgl_pengaduan: 2020-12-02
+  user_id: 1
+  image: MyString
+  laporan: MyText
+  status: MyString
