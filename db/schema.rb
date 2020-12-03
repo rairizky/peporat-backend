@@ -16,16 +16,19 @@ ActiveRecord::Schema.define(version: 2020_12_02_154543) do
   enable_extension "plpgsql"
 
   create_table "pengaduans", force: :cascade do |t|
+    t.string "title"
+    t.string "nik"
     t.date "tgl_pengaduan"
-    t.integer "user_id"
     t.string "image"
     t.text "laporan"
     t.string "status"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "profiles", force: :cascade do |t|
+    t.integer "user_id"
     t.string "nik"
     t.string "image"
     t.string "nama"

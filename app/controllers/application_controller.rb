@@ -21,6 +21,7 @@ class ApplicationController < ActionController::API
         end
     end
 
+    # all author
     def logged_in_user
         if decode_token
             user_id = decode_token[0]['user_id']
@@ -33,7 +34,54 @@ class ApplicationController < ActionController::API
     end
 
     def authorized
-        render json: { message: 'Silahkan login terlebih dahulu!' }, status: :unauthorized unless logged_in?
+        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in?
     end
 
+    # admin
+    def logged_in_user_admin
+        if decode_token
+            user_id = decode_token[0]['user_id']
+            @user = User.where(id: user_id).where(role: 'admin').first
+        end
+    end
+
+    def logged_in_admin?
+        !!logged_in_user_admin
+    end
+
+    def authorized_admin
+        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in_admin?
+    end
+
+    # petugas
+    def logged_in_user_petugas
+        if decode_token
+            user_id = decode_token[0]['user_id']
+            @user = User.where(id: user_id).where(role: 'petugas').first
+        end
+    end
+
+    def logged_in_petugas?
+        !!logged_in_user_petugas
+    end
+
+    def authorized_petugas
+        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in_petugas?
+    end
+
+    # user
+    def logged_in_user_user
+        if decode_token
+            user_id = decode_token[0]['user_id']
+            @user = User.where(id: user_id).where(role: 'user').first
+        end
+    end
+
+    def logged_in_user?
+        !!logged_in_user_user
+    end
+
+    def authorized_user
+        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in_user?
+    end
 end

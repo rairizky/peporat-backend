@@ -8,4 +8,6 @@ class User < ApplicationRecord
     validates :role, presence: true, :inclusion => { in: roles.values }
 
     has_secure_password
+
+    has_one :profile
 end

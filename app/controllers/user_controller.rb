@@ -1,6 +1,6 @@
 class UserController < ApplicationController
 
-  before_action :authorized, only: [:test]
+  before_action :authorized_admin, only: [:register]
 
   def register
     @user = User.create(user_params)
@@ -24,10 +24,6 @@ class UserController < ApplicationController
     else
       render json: {status: false, error: "Email not found"}, status: :forbidden
     end
-  end
-
-  def test
-    render json: {user: @user}
   end
 
   private

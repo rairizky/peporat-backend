@@ -1,0 +1,2 @@
+class PetugasController < ApplicationController
+end

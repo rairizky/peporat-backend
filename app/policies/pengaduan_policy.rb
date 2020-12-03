@@ -1,3 +1,0 @@
-class PengaduanPolicy < ApplicationPolicy
-    
-end
