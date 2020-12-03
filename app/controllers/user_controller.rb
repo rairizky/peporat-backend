@@ -1,7 +1,5 @@
 class UserController < ApplicationController
 
-  before_action :authorized_admin, only: [:register]
-
   def register
     @user = User.create(user_params)
     if @user.valid?
@@ -28,6 +26,7 @@ class UserController < ApplicationController
 
   private
   def user_params
-    params.permit(:email, :password, :role)
+    role = { role: 'user' }
+    params.permit(:email, :password).merge(role)
   end
 end

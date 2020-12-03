@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
     end
 
     def authorized
-        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in?
+        render json: { status: false, message: 'You are not authorized!' }, status: :unauthorized unless logged_in?
     end
 
     # admin
@@ -50,7 +50,7 @@ class ApplicationController < ActionController::API
     end
 
     def authorized_admin
-        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in_admin?
+        render json: { status: false, message: 'You are not authorized!' }, status: :unauthorized unless logged_in_admin?
     end
 
     # petugas
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::API
     end
 
     def authorized_petugas
-        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in_petugas?
+        render json: { status: false, message: 'You are not authorized!' }, status: :unauthorized unless logged_in_petugas?
     end
 
     # user
@@ -82,6 +82,10 @@ class ApplicationController < ActionController::API
     end
 
     def authorized_user
-        render json: { message: 'You are not authorized!' }, status: :unauthorized unless logged_in_user?
+        render json: { status: false, message: 'You are not authorized!' }, status: :unauthorized unless logged_in_user?
+    end
+
+    def check_has_profile
+        render json: { status: false, message: 'Please add profile first!' }, status: :bad_request unless @user.profile != nil
     end
 end

@@ -1,6 +1,7 @@
 class PengaduanController < ApplicationController
 
     before_action :authorized_user
+    before_action :check_has_profile
 
     def create
         @pengaduan = Pengaduan.create(pengaduan_params)
@@ -13,7 +14,8 @@ class PengaduanController < ApplicationController
 
     private
     def pengaduan_params
-        status = { status: "pending" }
-        params.permit(:title, :tgl_pengaduan, :nik, :image, :laporan, :status).merge(status)
+        get_profile = User.find(@user.id).profile
+        data = { status: "pending", nik: get_profile.nik }
+        params.permit(:title, :tgl_pengaduan, :image, :laporan, :status).merge(data)
     end
 end
