@@ -1,16 +1,40 @@
 Rails.application.routes.draw do
   
   # auth
-  post '/register', to: 'user#register'
-  post '/login', to: 'user#login'
+  scope 'auth' do
+    post '/register', to: 'user#register'
+    post '/login', to: 'user#login'
+  end
   get '/test', to: 'user#test'
 
   # user
-  get '/profile', to: 'profile#index'
-  post '/profile/create', to: 'profile#create'
-  patch '/profile/update', to: 'profile#update'
+  scope 'profile' do
+    get '/', to: 'profile#index'
+    post '/create', to: 'profile#create'
+    patch '/update', to: 'profile#update'
+  end
 
   # pengaduan
-  post '/pengaduan/create', to: 'pengaduan#create'
+  scope 'pengaduan' do
+    get '/', to: 'pengaduan#index'
+    get '/:id', to: 'pengaduan#detail_pengaduan'
+    post '/create', to: 'pengaduan#create'
+  end
 
+  # petugas
+  scope 'petugas' do
+    # pengaduan
+    scope 'pengaduan' do
+      # nil
+      get '/', to: 'petugas#list_pengaduan_nil'
+      get '/:id/detail', to: 'petugas#detail_pengaduan'
+      patch '/:id/take', to: 'petugas#ambil_pengaduan'
+
+      # proses
+      get '/proses', to: 'petugas#list_pengaduan_proses'
+
+      # finish
+      get '/finish', to: 'petugas#list_pengaduan_finish'
+    end
+  end
 end

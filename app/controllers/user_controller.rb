@@ -17,10 +17,10 @@ class UserController < ApplicationController
         token = encode_token({user_id: @user.id})
         render json: {status: true, user: @user, token: token}, status: :ok
       else
-        render json: {status: false, error: "Credentials not match!"}, status: :forbidden
+        render json: {status: false, error: "Email dan Password tidak sesuai!"}, status: :forbidden
       end
     else
-      render json: {status: false, error: "Email not found"}, status: :forbidden
+      render json: {status: false, error: "Email tidak ditemukan"}, status: :forbidden
     end
   end
 
