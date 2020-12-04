@@ -24,17 +24,32 @@ Rails.application.routes.draw do
   # petugas
   scope 'petugas' do
     # pengaduan
-    scope 'pengaduan' do
+    scope '/pengaduan' do
       # nil
       get '/', to: 'petugas#list_pengaduan_nil'
       get '/:id/detail', to: 'petugas#detail_pengaduan'
       patch '/:id/take', to: 'petugas#ambil_pengaduan'
+      post '/:id/finish', to: 'petugas#selesai_pengaduan'
 
       # proses
       get '/proses', to: 'petugas#list_pengaduan_proses'
 
       # finish
       get '/finish', to: 'petugas#list_pengaduan_finish'
+    end
+  end
+
+  # admin
+  scope 'admin' do
+    # list petugas
+    scope '/user' do
+      get '/', to: 'admin#user_index'
+      post '/create', to: 'admin#user_create'
+    end
+    
+    # laporan
+    scope '/report' do
+      get '/', to: 'admin#laporan'
     end
   end
 end

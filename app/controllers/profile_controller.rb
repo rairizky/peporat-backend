@@ -15,7 +15,7 @@ class ProfileController < ApplicationController
             if @create_profile.valid?
                 render json: {status: true, message: 'Profile berhasil dibuat!'}, status: :created
             else
-                render json: {status: false, error: @create_profile.errors}, status: :unprocessable_entity
+                render json: {status: false, message: @create_profile.errors}, status: :unprocessable_entity
             end
         else
             render json: {status: false, message: 'Profile sudah ada!'}, status: :conflict
@@ -32,7 +32,7 @@ class ProfileController < ApplicationController
             @update_profile.save
             render json: {status: true, message: 'Profile berhasil diupdate!'}, status: :ok
         else
-            render json: {status: false, error: @update_profile.errors}, status: :unprocessable_entity
+            render json: {status: false, message: @update_profile.errors}, status: :unprocessable_entity
         end
     end
 

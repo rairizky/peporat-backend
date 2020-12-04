@@ -6,7 +6,7 @@ class UserController < ApplicationController
       token = encode_token({user_id: @user.id})
       render json: {status: true, user: @user, token: token}, status: :created
     else
-      render json: {status: false, error: @user.errors}, status: :unprocessable_entity
+      render json: {status: false, message: @user.errors}, status: :unprocessable_entity
     end
   end
 
@@ -17,10 +17,10 @@ class UserController < ApplicationController
         token = encode_token({user_id: @user.id})
         render json: {status: true, user: @user, token: token}, status: :ok
       else
-        render json: {status: false, error: "Email dan Password tidak sesuai!"}, status: :forbidden
+        render json: {status: false, message: "Email dan Password tidak sesuai!"}, status: :forbidden
       end
     else
-      render json: {status: false, error: "Email tidak ditemukan"}, status: :forbidden
+      render json: {status: false, message: "Email tidak ditemukan"}, status: :forbidden
     end
   end
 

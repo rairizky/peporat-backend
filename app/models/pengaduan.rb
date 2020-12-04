@@ -13,4 +13,5 @@ class Pengaduan < ApplicationRecord
     liberal_enum :status
     validates :status, presence: true, inclusion: { in: statuses.values }
 
+    has_one :tanggapan
 end

@@ -13,7 +13,7 @@ class PengaduanController < ApplicationController
         if detail 
             render json: {status: true, data: detail}, status: :ok 
         else
-            render json: {status: false, error: "Pengaduan tidak ditemukan!" }, status: :not_found
+            render json: {status: false, message: "Pengaduan tidak ditemukan!" }, status: :not_found
         end
     end
 
@@ -22,7 +22,7 @@ class PengaduanController < ApplicationController
         if @pengaduan.valid?
             render json: {status: true, message: 'Laporan berhasil dibuat!'}, status: :created
         else
-            render json: {status: false, error: @pengaduan.errors}, status: :unprocessable_entity
+            render json: {status: false, message: @pengaduan.errors}, status: :unprocessable_entity
         end
     end
 
