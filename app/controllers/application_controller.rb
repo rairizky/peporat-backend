@@ -88,4 +88,9 @@ class ApplicationController < ActionController::API
     def check_has_profile
         render json: { status: false, message: 'Please add profile first!' }, status: :bad_request unless @user.profile != nil
     end
+
+    private
+    def pengaduan_detail_status_not_found
+        render json: {status: false, message: "Pengaduan tidak ditemukan!" }, status: :not_found
+    end
 end

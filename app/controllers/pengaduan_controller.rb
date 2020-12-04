@@ -2,6 +2,7 @@ class PengaduanController < ApplicationController
 
     before_action :authorized_user, only: [:create]
     before_action :check_has_profile, only: [:create]
+    rescue_from ActiveRecord::RecordNotFound, with: :pengaduan_detail_status_not_found
 
     def index
         pengaduan = Pengaduan.all.order(created_at: :desc)
@@ -9,12 +10,8 @@ class PengaduanController < ApplicationController
     end
 
     def detail_pengaduan
-        detail = Pengaduan.find_by(id: params[:id])
-        if detail 
-            render json: {status: true, data: detail}, status: :ok 
-        else
-            render json: {status: false, message: "Pengaduan tidak ditemukan!" }, status: :not_found
-        end
+        detail = Pengaduan.find(params[:id])
+        render json: {status: true, data: detail}, status: :ok 
     end
 
     def create
@@ -32,4 +29,5 @@ class PengaduanController < ApplicationController
         data = { status: "pending", nik: get_profile.nik }
         params.permit(:title, :tgl_pengaduan, :image, :laporan, :status).merge(data)
     end
+
 end

@@ -1,6 +1,7 @@
 class PetugasController < ApplicationController
 
     before_action :authorized_petugas
+    rescue_from ActiveRecord::RecordNotFound, with: :pengaduan_detail_status_not_found
 
     # status pengaduan belum di proses
     def list_pengaduan_nil
@@ -9,12 +10,8 @@ class PetugasController < ApplicationController
     end
 
     def detail_pengaduan
-        detail = Pengaduan.find_by(id: params[:id])
-        if detail 
-            render json: {status: true, data: detail}, status: :ok 
-        else
-            render json: {status: false, message: "Pengaduan tidak ditemukan!" }, status: :not_found
-        end
+        detail = Pengaduan.find(params[:id])
+        render json: {status: true, data: detail}, status: :ok 
     end
 
     def ambil_pengaduan
@@ -26,7 +23,7 @@ class PetugasController < ApplicationController
                 render json: {status: false, message: "Ambil pengaduan gagal!"}, status: :unprocessable_entity
             end
         else
-            render json: {status: false, message: "Pengaduan tidak ditemukan!" }, status: :not_found
+            pengaduan_detail_status_not_found
         end
     end
 
@@ -45,7 +42,7 @@ class PetugasController < ApplicationController
                 render json: {status: false, message: 'Tanggapan sudah ada'}, status: :conflict
             end
         else
-            render json: {status: false, message: "Pengaduan tidak ditemukan!" }, status: :not_found
+            pengaduan_detail_status_not_found
         end
     end
 
