@@ -19,7 +19,18 @@ class AdminController < ApplicationController
 
     # laporan
     def laporan
-
+        @pengaduan = Pengaduan.where(nil).order(created_at: :desc)
+        status = params[:status]
+        month = params[:month]
+        year = params[:year]
+        if status or month or year
+            @pengaduan = Pengaduan.where(status: status).order(created_at: :desc) if status.present?
+            b_awal = Date.parse("1/#{month}/#{year}") if month.present? && year.present?
+            b_akhir = b_awal.end_of_month if month.present? && year.present?
+            @pengaduan = Pengaduan.where(tgl_pengaduan: b_awal..b_akhir) if month.present? && year.present?
+            @pengaduan = Pengaduan.where(status: status).where(tgl_pengaduan: b_awal..b_akhir) if status.present? && month.present? && year.present?
+        end
+        render json: {status: true, total: @pengaduan.count, data: @pengaduan}, status: :ok
     end
 
     private

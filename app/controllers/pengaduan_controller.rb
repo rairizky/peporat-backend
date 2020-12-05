@@ -1,11 +1,14 @@
 class PengaduanController < ApplicationController
 
-    before_action :authorized_user, only: [:create]
-    before_action :check_has_profile, only: [:create]
+    before_action :authorized_user, only: [:create, :history]
+    before_action :check_has_profile, only: [:create, :history]
     rescue_from ActiveRecord::RecordNotFound, with: :pengaduan_detail_status_not_found
 
     def index
-        pengaduan = Pengaduan.all.order(created_at: :desc)
+        pengaduan = Pengaduan.where(nil).order(created_at: :desc)
+        if params[:status]
+            pengaduan = Pengaduan.where(status: params[:status]).order(created_at: :desc) if params[:status].present?
+        end
         render json: {status: true, total: pengaduan.count, data: pengaduan}, status: :ok
     end
 
@@ -21,6 +24,12 @@ class PengaduanController < ApplicationController
         else
             render json: {status: false, message: @pengaduan.errors}, status: :unprocessable_entity
         end
+    end
+
+    def history
+        get_user = User.find(@user.id)
+        @pengaduan = Pengaduan.all.where(nik: get_user.profile.nik).order(created_at: :desc)
+        render json: {status: true, total: @pengaduan.count, data: @pengaduan}, status: :ok
     end
 
     private

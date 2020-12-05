@@ -17,8 +17,9 @@ Rails.application.routes.draw do
   # pengaduan
   scope 'pengaduan' do
     get '/', to: 'pengaduan#index'
-    get '/:id', to: 'pengaduan#detail_pengaduan'
+    get '/:id/detail', to: 'pengaduan#detail_pengaduan'
     post '/create', to: 'pengaduan#create'
+    get '/history', to: 'pengaduan#history'
   end
 
   # petugas
